@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="aplicacion_zapatos/aplicacion_zapatos.csproj" />
+  <Project Path="front_zapatos/front_zapatos.csproj" />
+  <Project Path="presentacion_ganado/presentacion_zapatos.csproj" />
+  <Project Path="servicios_zapatos/servicios_zapatos.csproj" />
+</Solution>

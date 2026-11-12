@@ -1,0 +1,134 @@
+﻿@page
+@model ZapatosModel
+@{
+    ViewData["Title"] = "Zapatos";
+}
+<form method="post"
+    enctype="multipart/form-data">
+
+    <div class="text-center">
+        <h1 class="display-4">Zapatos</h1>
+
+        <input type="submit"
+            value="Buscar"
+            class="btn btn-secondary"
+            asp-page-handler="BtBuscar"/>
+        <input type="submit"
+            value="Nuevo"
+            class="btn btn-secondary"
+            asp-page-handler="BtNuevo"/>
+        <input type="submit"
+            value="Guardar"
+            class="btn btn-secondary"
+            asp-page-handler="BtGuardar"/>
+        <input id="flNombre" 
+            placeholder="Nombre"
+            asp-for="@Model.Filtro!.Nombre"/>
+
+        @if (ViewData.ContainsKey("Mensaje"))
+        {
+            @await Html.PartialAsync("../Emergentes/Mensajes.cshtml");
+        }
+
+        @if (Model.Formulario || Model.Borrar)
+        {
+            <input id="nmId"
+                type="hidden"
+                asp-for="@Model.Actual!.Id" />
+        }
+
+        @if (Model.Formulario)
+        {
+            <div>
+                <h3>Animal</h3>
+                
+                <label>
+                    Código
+                </label>
+                <input id="nmCodigo"
+                    asp-for="@Model.Actual!.Codigo" />
+                <br/>
+
+                <label>
+                    Nombre
+                </label>
+                <input id="nmNombre"
+                    asp-for="@Model.Actual!.Nombre" />
+                <br />
+
+                <label>
+                    Fecha
+                </label>
+                <input id="nmFecha"
+                    asp-for="@Model.Actual!.Fecha" />
+                <br />
+            </div>
+        }
+        
+        @if (Model.Borrar)
+        {
+            <div class="popup">
+                <div class="pp_del_inner">
+                    <h3>Mensaje</h3>
+
+                    <h4>
+                        ¿Desea borrar la entidad...?
+                    </h4>
+                    <h6>
+                        @Model.Actual!.Codigo,
+                        @Model.Actual!.Nombre,
+                    </h6>
+                    <input type="submit"
+                        value="Cancelar"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtBuscar" />
+                    <input type="submit"
+                        value="Borrar"
+                        class="btn btn-secondary"
+                        asp-page-handler="BtBorrar" />
+                </div>
+            </div>
+        }
+
+        @if (!Model.Formulario)
+        {
+            <div class="containers_vn panel panel-default">
+                <table class="tb_data table table-striped table-bordered table-hover">
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Especie</th>
+                        <th>Fecha</th>
+                        <th>Activo</th>
+                        <th>Observaciones</th>
+                        <th>Acción</th>
+                    </tr>
+                    @if (Model != null && Model.Lista != null)
+                    {
+                        foreach (var elemento in Model.Lista)
+                        {
+                            <tr>
+                                <td>@elemento.Codigo</td>
+                                <td>@elemento.Nombre</td>
+                                <td>@elemento.Fecha</td>
+                                <td>
+                                    <input type="submit" 
+                                        value="Editar"
+                                        class="btn btn-secondary"
+                                        asp-page-handler="BtEditar"
+                                        asp-route-data="@elemento.Id" />
+                                    <input type="submit" 
+                                        value="Borrar"
+                                        class="btn btn-secondary"
+                                        asp-page-handler="BtPregBorrar"
+                                        asp-route-data="@elemento.Id" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                </table>
+            </div>
+        }
+
+    </div>
+</form>

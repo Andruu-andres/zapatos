@@ -1,0 +1,6 @@
+@servicios_zapatos_HostAddress = http://localhost:5109
+
+GET {{servicios_zapatos_HostAddress}}/zapatos/
+Accept: application/json
+
+###
